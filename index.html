@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>致我的女孩｜七夕快乐</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body {
+  background:#050718;
+  min-height:100vh;
+  overflow:hidden;
+  font-family:system-ui;
+}
+
+/* 开场大标题遮罩层 */
+.start-page{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  background:#050718;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index: 999;
+}
+.big-title{
+  color:#ffd6e2;
+  font-size: clamp(24px,7vw,42px);
+  font-weight:bold;
+  text-align:center;
+  padding:0 20px;
+}
+.click-hint{
+  margin-top:40px;
+  color:#bbbbbb;
+  font-size:15px;
+}
+
+.float-item{
+  position:absolute;
+  color:#e8edff;
+  white-space:nowrap;
+  font-size:16px;
+  opacity:0.85;
+  pointer-events:none;
+}
+.heart{
+  color:#ff6b8b;
+  font-size:22px;
+  opacity:0.7;
+  position:absolute;
+  pointer-events:none;
+}
+
+@keyframes floatDown {
+  0% {
+    transform: translateY(-10%) rotate(3deg);
+    opacity:0;
+  }
+  10%{opacity:0.9;}
+  90%{opacity:0.8;}
+  100% {
+    transform: translateY(110vh) rotate(-3deg);
+    opacity:0;
+  }
+}
+</style>
+</head>
+<body>
+<!-- 开场页面 -->
+<div class="start-page" id="startWrap">
+  <div class="big-title">杨敏会小朋友，这是你的专属七夕礼物🎁</div>
+  <div class="click-hint">👆点击屏幕开启惊喜</div>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+<source src="多幸运-韩安旭.mp3" type="audio/mpeg">
+
+<script>
+// =========修改这里 告白弹幕文案========
+const textList = [
+"愿我们爱如星辰",
+"盼岁岁与你相伴",
+"心向你，不问归期",
+"山河万里，独恋你",
+"余生，只想陪着你",
+"风月起，皆为心动",
+"把温柔都给你",
+"万般欢喜皆因你",
+"朝暮，皆与你相依",
+"有幸，人海遇见你",
+"满心皆是你的模样",
+"晚风捎去我相思",
+"世间美好尽予你",
+"执手，共赴朝夕",
+"眼底星河都赠你",
+"此生偏爱只为你",
+"烟火人间，有你足矣",
+"相思漫过流年",
+"愿陪你朝朝暮暮",
+"万千温柔予你",
+"跨越人海奔向你",
+"万幸，相逢是你",
+"岁岁相守不分离",
+"揽星光换你欢喜",
+"执念，全都为你",
+"风月万千不及你",
+"共赏人间四季",
+"满腔热忱献给你",
+"山河辽阔只恋你",
+"烟火余生共与你",
+"一眼心动，念岁岁",
+"月色倾洒皆为你",
+"红尘辗转幸遇你",
+"予你安稳与欢愉",
+"心念朝暮归于你",
+"浮世万千，吾爱唯你",
+"携梦岁岁相依",
+"山河满目不如你",
+"一腔深情尽予你",
+"流年往复只陪你",
+"星月叙尽我相思",
+"人间风月独爱你",
+"共渡人间春秋",
+"心动始于初见你",
+"余生尽数交付你",
+"星河滚烫，你是理想",
+"烟火流年共度过",
+"风月只为倾心于你",
+"人海浮沉幸得你",
+"朝暮岁岁心系于你",
+"你是我一见你就笑的人",
+"七夕快乐宝贝",
+"多幸运，能够遇见你",
+"岁岁年年，我都在",
+"想和你走过朝朝暮暮",
+"永远偏爱你",
+"2026--永远"
+];
+
+const audio = document.getElementById('bgMusic');
+const startWrap = document.getElementById('startWrap');
+let isStart = false;
+
+//点击屏幕触发全部：关闭开场、播放音乐、启动飘落特效
+document.body.addEventListener('click',()=>{
+  if(isStart) return;
+  isStart = true;
+  //隐藏开场大字
+  startWrap.style.display = 'none';
+  //播放背景音乐
+  audio.play();
+
+  //开始生成飘落文字
+  setInterval(createText,520);
+  setInterval(createHeart,1100);
+  for(let i=0;i<12;i++){
+    setTimeout(createText,i*250);
+  }
+})
+
+
+//生成漂浮文字
+function createText(){
+  const el = document.createElement("div");
+  el.className = "float-item";
+  el.innerText = textList[Math.floor(Math.random()*textList.length)];
+  el.style.left = Math.random()*95 + "%";
+  const dur = 12 + Math.random()*14;
+  el.style.animation = `floatDown ${dur}s linear forwards`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), dur*1000);
+}
+
+//生成爱心
+function createHeart(){
+  const el = document.createElement("div");
+  el.className = "heart";
+  el.innerText = "♥";
+  el.style.left = Math.random()*95 + "%";
+  const dur = 10 + Math.random()*12;
+  el.style.animation = `floatDown ${dur}s linear forwards`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), dur*1000);
+}
+</script>
+</body>
+</html>
